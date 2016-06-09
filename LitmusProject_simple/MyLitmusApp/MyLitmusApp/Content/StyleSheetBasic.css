@@ -1,10 +1,15 @@
-﻿/*body {
-    background-color : #ff6a00;
-}*/
+﻿body {
+    background-color : #eef1f4;
+}
  
 #myhead {
-    background-color :#ffd800;
+    background-color :#e8824f;
 }
+
+#myErrorHead {
+    background-color :#ff0000;
+}
+
 
 .buttonContainer {
     overflow: hidden;
@@ -18,4 +23,9 @@ form {
 form:first-child {
     margin-right: 50px;
  
+}
+
+h3 {
+     color: #ffffff ;
+     font: bold;
 }

@@ -1,13 +1,9 @@
-﻿
+﻿@model   MyLitmusApp.Models.AccountDataObject
+
+
 @{
     Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
-
-<h2>Index</h2>
-
- 
-  
-
  
 <form action="/LitmusMainCTRL/EmailClients">
     <input type="submit" value="Show Emails   " />
@@ -16,7 +12,12 @@
 <form action="/LitmusMainCTRL/BrowserClients">
     <input type="submit" value="Show Browsers " />
 </form>
- message is
-     @ViewBag.mes 
+ 
+<body>
+    <br /><br />
+    @Model.FirstName <br />
+    @Model.LastName   <br />
+     Time left to use this aplication:   @Model.TimeLeft <br />
+</body>
 
  

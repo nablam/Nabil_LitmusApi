@@ -1,9 +1,19 @@
 ﻿
 @{
     ViewBag.Title = "ErrorPage";
-    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
 }
 
-<h2>ErrorPage</h2>
 
-@ViewBag.passedError
+
+<body>
+    <div class="buttonContainer">
+        <form action="/LitmusMainCTRL/Index">
+            <input type="submit" value="Go back home" />
+        </form>
+
+
+
+
+        <h5>  @ViewBag.passedError</h5>
+</body>

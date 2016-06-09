@@ -147,7 +147,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataEmail.cs" />
+    <Compile Include="Models\AccountDataObject.cs" />
+    <Compile Include="Models\ResLoginObject.cs" />
+    <Compile Include="Models\ResResponseObject.cs" />
     <Compile Include="Models\TestingAppModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestSharpHelper\RestSharpWrapper.cs" />
@@ -165,6 +167,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
