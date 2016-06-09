@@ -71,6 +71,7 @@ namespace MyLitmusApp.Controllers
             IRestResponse responseRaw = restClient.Execute(request_email);
             HttpStatusCode code = responseRaw.StatusCode;
             string codeStr = code.ToString();
+
             if (code.ToString() != "OK")
             {
                 string ErrorMessageTOPass = "";

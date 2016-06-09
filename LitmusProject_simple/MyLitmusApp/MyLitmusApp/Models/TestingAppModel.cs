@@ -18,13 +18,27 @@ namespace MyLitmusApp.Models
         {
             _AppName = name;
             _AppCode = appCode;
-            _TestLength = testLength;
+            _TestLength = LengthConverter(testLength);
             _Status = status;
             _PlatformName = platformName;
             _ResultType = result;   //needed in case of spam 
         }
 
-        private string LengthConverter(string s) { return ""; }
+        private string LengthConverter(string secondStr)
+        {
+            if (!String.IsNullOrEmpty(secondStr))
+            {
+                string formatedtime;
+                int seconds = Math.Abs(Int32.Parse(secondStr));
+                if (seconds < 3600)
+                    formatedtime = string.Format("{0:00}m :{1:00}s", (seconds / 60) % 60, seconds % 60);
+                else
+                    formatedtime = string.Format("{0:00}h :{1:00}m :{2:00}s", seconds / 3600, (seconds / 60) % 60, seconds % 60);
 
+                return formatedtime;
+            }
+            else
+                return "N/A";
+        }
     }
 }
