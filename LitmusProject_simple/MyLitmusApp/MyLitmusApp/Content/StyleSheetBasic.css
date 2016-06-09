@@ -1,0 +1,21 @@
+﻿/*body {
+    background-color : #ff6a00;
+}*/
+ 
+#myhead {
+    background-color :#ffd800;
+}
+
+.buttonContainer {
+    overflow: hidden;
+}
+
+form {
+    float: left;
+    width:200px;
+}
+
+form:first-child {
+    margin-right: 50px;
+ 
+}

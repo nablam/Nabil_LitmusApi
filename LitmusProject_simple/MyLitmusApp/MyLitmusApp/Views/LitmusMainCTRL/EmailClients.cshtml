@@ -1,0 +1,34 @@
+﻿@model  List<MyLitmusApp.Models.TestingAppModel>
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+ 
+<body>
+    <div class="buttonContainer">
+        <form action="/LitmusMainCTRL/Index">
+            <input type="submit" value="Go back home" />
+        </form>
+
+        <form action="/LitmusMainCTRL/BrowserClients">
+            <input type="submit" value="Show Browsers" />
+        </form>
+    </div>
+
+        <br /><br />
+
+
+        @foreach (var obj in Model)
+        {
+            <div>
+                <li>EmailClient Name:    @obj._AppName</li>
+                <li>EmailClient Code: @obj._AppCode</li>
+                <li>EmailClient Average test time: @obj._TestLength</li>
+                <li>EmailClient Status: @obj._Status</li>
+                <li>EmailClient Platform: @obj._PlatformName</li>
+                <br />
+            </div>
+        }
+
+
+</body>
