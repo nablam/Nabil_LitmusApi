@@ -25,12 +25,23 @@ namespace MyLitmusApp.Controllers
             AccountDataObject AccountOBJ = ReadXmlBuildAccountData(XML);
             return View(AccountOBJ);
         }
-        ActionResult _CLIENTFUNC(string XML)
+        ActionResult _EMAILCLIENT_FUNC(string XML)
         {
             List<TestingAppModel> listFromXml = ReadXmlBuildDataList(XML);
             CompleteTetingAppsList = MakesortedEmailList(listFromXml);
+            return View(CompleteTetingAppsList);  //  or just return View(listFromXml.OrderBy(t => t._PlatformName).ToList()); 
+        }
+
+        //The next function is not needed. 
+        //The browsers are already sorted by platform in the xml responc
+        ActionResult _BROWSERCLIENT_FUNC(string XML)
+        {
+            CompleteTetingAppsList = ReadXmlBuildDataList(XML);             
             return View(CompleteTetingAppsList);
         }
+
+
+
         #endregion
 
         #region Actions
@@ -42,13 +53,15 @@ namespace MyLitmusApp.Controllers
 
         [HttpGet]
         public ActionResult EmailClients() {
-            return HANDELANYAPI("/emails/clients.xml", _CLIENTFUNC);
+            return HANDELANYAPI("/emails/clients.xml", _EMAILCLIENT_FUNC);
         }
     
+        
+       
         [HttpGet]
         public ActionResult BrowserClients()
         {
-            return HANDELANYAPI("/pages/clients.xml", _CLIENTFUNC);
+            return HANDELANYAPI("/pages/clients.xml", _BROWSERCLIENT_FUNC);
         }
 
         [HttpGet]
@@ -148,16 +161,23 @@ namespace MyLitmusApp.Controllers
         }
 
         List<TestingAppModel> MakesortedEmailList(List<TestingAppModel> unsortedlist ) {
-            List<TestingAppModel> SortedList = new List<TestingAppModel>();
-            IEnumerable<IGrouping<string, TestingAppModel>> IgroupList = unsortedlist.GroupBy(b => b._PlatformName);
-            foreach (IGrouping<string, TestingAppModel> subList in IgroupList)
-            {
-                foreach (TestingAppModel singleT in subList)
-                {
-                    SortedList.Add(singleT);
-                }
-            }
-            return SortedList;
+
+
+            //List<TestingAppModel> SortedList = new List<TestingAppModel>();
+            //IEnumerable<IGrouping<string, TestingAppModel>> IgroupList = unsortedlist.GroupBy(b => b._PlatformName);
+            //foreach (IGrouping<string, TestingAppModel> subList in IgroupList)
+            //{
+            //    foreach (TestingAppModel singleT in subList)
+            //    {
+            //        SortedList.Add(singleT);
+            //    }
+            //}
+            //return SortedList;
+
+            //Way less overhead.. I just wanted to play with Igrouping and sublists for fun...
+            //I would not do such a thing in a real production senario , or I would consult with a senior dev first :P
+            return unsortedlist.OrderBy(t => t._PlatformName).ToList();
+            
         }
         #endregion
     }
