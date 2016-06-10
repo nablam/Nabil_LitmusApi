@@ -18,29 +18,49 @@ namespace MyLitmusApp.Controllers
         private readonly RestClient restClient = new RestClient("https://lamribenn.litmus.com");
         private List<TestingAppModel> CompleteTetingAppsList;
 
+        #region delegate
+        delegate ActionResult MYDELEGATE(string responceTEXT);
+        ActionResult _ACCOUNTFUINC(string XML)
+        {
+            AccountDataObject AccountOBJ = ReadXmlBuildAccountData(XML);
+            return View(AccountOBJ);
+        }
+        ActionResult _CLIENTFUNC(string XML)
+        {
+            List<TestingAppModel> listFromXml = ReadXmlBuildDataList(XML);
+            CompleteTetingAppsList = MakesortedEmailList(listFromXml);
+            return View(CompleteTetingAppsList);
+        }
+        #endregion
+
+        #region Actions
         [HttpGet]
         public ActionResult Index()
         {
-          return  HandleThisApiAccount("accounts.xml");
-        }
-
-        public ActionResult ErrorPage() {
-            ViewBag.passedError = TempData["message"];
-            return View();
+            return HANDELANYAPI("accounts.xml", _ACCOUNTFUINC);
         }
 
         [HttpGet]
         public ActionResult EmailClients() {
-            return HandleThisApi("/emails/clients.xml");
+            return HANDELANYAPI("/emails/clients.xml", _CLIENTFUNC);
         }
     
         [HttpGet]
         public ActionResult BrowserClients()
         {
-            return HandleThisApi("/pages/clients.xml");
+            return HANDELANYAPI("/pages/clients.xml", _CLIENTFUNC);
         }
 
-        ActionResult HandleThisApiAccount(string apiUrl)
+        [HttpGet]
+        public ActionResult ErrorPage()
+        {
+            ViewBag.passedError = TempData["message"];
+            return View();
+        }
+        #endregion
+
+        #region private_functions
+        ActionResult HANDELANYAPI(string apiUrl, MYDELEGATE functionPointer )
         {
 
             RestSharpWrapper Rhelper = new RestSharpWrapper(restClient, apiUrl);
@@ -53,19 +73,14 @@ namespace MyLitmusApp.Controllers
             }
             else
             {
-                string XML_Response = robj._ResponseRaw.Content;
-
-                AccountDataObject AccountOBJ = ReadXmlBuildAccountData(XML_Response);
-                return View(AccountOBJ);
+              return functionPointer(robj._ResponseRaw.Content);
             }
 
         }
 
-
-
         AccountDataObject ReadXmlBuildAccountData(string xml_str)
         {
-            string fname=""; string lname=""; string datecreated="";
+            string fname = ""; string lname = ""; string datecreated = "";
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xml_str);
@@ -76,49 +91,16 @@ namespace MyLitmusApp.Controllers
                 datecreated = (childrenNode2.SelectSingleNode("created_at").InnerText);
             }
 
-
-
             XmlNodeList parentNode = xmlDoc.GetElementsByTagName("account_holder");
             foreach (XmlNode childrenNode in parentNode)
             {
-                 fname = (childrenNode.SelectSingleNode("first_name").InnerText);
-                 lname = (childrenNode.SelectSingleNode("last_name").InnerText);              
+                fname = (childrenNode.SelectSingleNode("first_name").InnerText);
+                lname = (childrenNode.SelectSingleNode("last_name").InnerText);
             }
 
-        
-
-            AccountDataObject accountObject = new AccountDataObject(fname,lname,datecreated);
+            AccountDataObject accountObject = new AccountDataObject(fname, lname, datecreated);
 
             return accountObject;
-        }
-
-
-
-
-
-
-
-
-
-        ActionResult HandleThisApi(string apiUrl)
-        {
-
-            RestSharpWrapper Rhelper = new RestSharpWrapper(restClient, apiUrl);
-            ResResponseObject robj = Rhelper.ActivateConnection();
-
-            if (robj._ResponceMessage != "OK")
-            {
-                TempData["message"] = MapErrorMessage(robj._ResponceMessage);
-                return RedirectToAction("ErrorPage");
-            }
-            else
-            {
-                string XML_Response = robj._ResponseRaw.Content;
-                List<TestingAppModel> listFromXml = ReadXmlBuildDataList(XML_Response);
-                CompleteTetingAppsList = MakesortedEmailList(listFromXml);
-                return View(CompleteTetingAppsList);
-            }
-
         }
 
         string MapErrorMessage(string errorMessage)
@@ -177,6 +159,6 @@ namespace MyLitmusApp.Controllers
             }
             return SortedList;
         }
-    
+        #endregion
     }
 }

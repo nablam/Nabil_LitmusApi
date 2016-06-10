@@ -7,7 +7,7 @@
 <body>
     <div class="buttonContainer">
         <form action="/LitmusMainCTRL/Index">
-            <input type="submit" value="Go back home" />
+            <input type="submit" value="Home" />
         </form>
 
         <form action="/LitmusMainCTRL/BrowserClients">
@@ -15,20 +15,20 @@
         </form>
     </div>
 
-        <br /><br />
 
-
+    <div id="uldiv">
         @foreach (var obj in Model)
         {
-            <div>
-                <li>EmailClient Name:    @obj._AppName</li>
-                <li>EmailClient Code: @obj._AppCode</li>
-                <li>EmailClient Average test time: @obj._TestLength</li>
-                <li>EmailClient Status: @obj._Status</li>
-                <li>EmailClient Platform: @obj._PlatformName</li>
+            <ul>
+                <li>Name:   @obj._AppName  </li>
+                <li> Code: @obj._AppCode</li>
+                <li> Average test time: @obj._TestLength</li>
+                <li> Status: @obj._Status</li>
+                <li> Platform: @obj._PlatformName</li>
+
+            </ul>
                 <br />
-            </div>
         }
 
-
+    </div>
 </body>

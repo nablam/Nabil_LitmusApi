@@ -1,6 +1,5 @@
 ﻿@model  List<MyLitmusApp.Models.TestingAppModel>
 @{
-   // ViewBag.Title = "BrowserClients";
     Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
 
@@ -8,32 +7,26 @@
 <body>
     <div class="buttonContainer">
         <form action="/LitmusMainCTRL/Index">
-            <input type="submit" value="Home   " />
+            <input type="submit" value="Home" />
         </form>
 
         <form action="/LitmusMainCTRL/EmailClients">
             <input type="submit" value="Show Emails   " />
         </form>
-
     </div>
 
-
-
-
-
-
-    @foreach (var obj in Model)
-    {
-        <div>
-
-            <li>Browser Name:    @obj._AppName</li>
-            <li>Browser Code: @obj._AppCode</li>
-            <li>Browser Average test time: @obj._TestLength</li>
-            <li>Status: @obj._Status</li>
-            
+    <div id="uldiv">
+        @foreach (var obj in Model)
+        {
+            <ul>
+                <li> Name:    @obj._AppName</li>
+                <li> Code: @obj._AppCode</li>
+                <li> Average test time: @obj._TestLength</li>
+                <li> Status: @obj._Status</li>
+            </ul>
             <br />
-        </div>
-    }
+        }
+    </div>
 
 </body>
 

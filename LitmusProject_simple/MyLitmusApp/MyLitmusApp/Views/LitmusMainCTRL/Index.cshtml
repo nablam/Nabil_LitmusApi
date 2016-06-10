@@ -1,23 +1,24 @@
 ﻿@model   MyLitmusApp.Models.AccountDataObject
-
-
 @{
     Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
  
-<form action="/LitmusMainCTRL/EmailClients">
-    <input type="submit" value="Show Emails   " />
-</form>
- 
-<form action="/LitmusMainCTRL/BrowserClients">
-    <input type="submit" value="Show Browsers " />
-</form>
- 
-<body>
-    <br /><br />
-    @Model.FirstName <br />
-    @Model.LastName   <br />
-     Time left to use this aplication:   @Model.TimeLeft <br />
-</body>
+<div class="buttonContainer">
+     <form action="/LitmusMainCTRL/EmailClients">
+        <input type="submit" value="Show Emails   " />
+    </form>
 
- 
+    <form action="/LitmusMainCTRL/BrowserClients">
+        <input type="submit" value="Show Browsers " />
+    </form>
+ </div>
+
+
+    <body>
+        <br /><br />
+        @Model.FirstName <br />
+        @Model.LastName   <br />
+        Time left to use this aplication:   @Model.TimeLeft <br />
+    </body>
+
+
